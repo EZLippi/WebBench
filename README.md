@@ -24,3 +24,10 @@ Webbench是一个在linux下使用的非常简单的网站压测工具。它使�
 	|      |--trace               |使用 TRACE请求方法                 |
 	|-?/-h |--help                |打印帮助信息                       |
 	|-V    |--version             |显示版本号                         |
+gg
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
