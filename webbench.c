@@ -24,6 +24,7 @@
 #include <time.h>
 #include <signal.h>
 
+#define MAX_SIZE 1024*1024
 /* values */
 volatile int timerexpired=0;
 int speed=0;
@@ -78,6 +79,10 @@ static void alarm_handler(int signal)
 {
    timerexpired=1;
 }	
+
+static void sigusr1_handler(int signal)
+{
+}
 
 static void usage(void)
 {
@@ -296,6 +301,9 @@ static int bench(void)
   int i,j,k;	
   pid_t pid=0;
   FILE *f;
+  int index=0;
+  struct sigaction sa;
+  pid_t pids[MAX_SIZE];
 
   /* check avaibility of target server */
   i=Socket(proxyhost==NULL?host:proxyhost,proxyport);
@@ -325,10 +333,19 @@ static int bench(void)
 	   pid=fork();
 	   if(pid <= (pid_t) 0)
 	   {
-		   /* child process or error*/
-	           sleep(1); /* make childs faster */
 		   break;
 	   }
+        /*record child pid*/
+        pids[i]=pid;
+        sleep(1);
+        /*after fork last child, start all clients*/
+        if(i == clients - 1)
+        {
+            for(index = 0; index <= i; ++index)
+            {
+                kill(pids[index], SIGUSR1);
+            }
+        }
   }
 
   if( pid< (pid_t) 0)
@@ -338,9 +355,21 @@ static int bench(void)
 	  return 3;
   }
 
+
+  /* I am a child */
   if(pid== (pid_t) 0)
   {
-    /* I am a child */
+     /*setup usr1 signal handler*/
+     sa.sa_handler = sigusr1_handler;
+     sa.sa_flags = 0; 
+     if(sigaction(SIGUSR1, &sa, NULL))
+     {
+         exit(3);
+     }
+
+     /*wait all clients ready*/
+     pause();
+
     if(proxyhost==NULL)
       benchcore(host,proxyport,request);
          else
