@@ -24,7 +24,7 @@
 #include <time.h>
 #include <signal.h>
 
-#define MAX_SIZE 1024*1024
+#define MAX_SIZE 3*1024*1024
 /* values */
 volatile int timerexpired=0;
 int speed=0;
