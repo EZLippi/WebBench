@@ -220,8 +220,10 @@ void build_request(const char *url)
     char tmp[10];
     int i;
 
-    bzero(host,MAXHOSTNAMELEN);
-    bzero(request,REQUEST_SIZE);
+    //bzero(host,MAXHOSTNAMELEN);
+    //bzero(request,REQUEST_SIZE);
+    memset(host,0,MAXHOSTNAMELEN);
+    memset(request,0,REQUEST_SIZE);
 
     if(force_reload && proxyhost!=NULL && http10<1) http10=1;
     if(method==METHOD_HEAD && http10<1) http10=1;
@@ -269,7 +271,8 @@ void build_request(const char *url)
         if(index(url+i,':')!=NULL && index(url+i,':')<index(url+i,'/'))
         {
             strncpy(host,url+i,strchr(url+i,':')-url-i);
-            bzero(tmp,10);
+            //bzero(tmp,10);
+            memset(tmp,0,10);
             strncpy(tmp,index(url+i,':')+1,strchr(url+i,'/')-index(url+i,':')-1);
             /* printf("tmp=%s\n",tmp); */
             proxyport=atoi(tmp);
