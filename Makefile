@@ -15,7 +15,7 @@ tags:  *.c
 install: webbench
 	install -d $(DESTDIR)$(PREFIX)/bin
 	install -s webbench $(DESTDIR)$(PREFIX)/bin
-	ln -s $(DESTDIR)$(PREFIX)/bin/webbench $(DESTDIR)/usr/local/bin/webbench
+	ln -sf $(DESTDIR)$(PREFIX)/bin/webbench $(DESTDIR)/usr/local/bin/webbench
 
 	install -d $(DESTDIR)$(PREFIX)/$(INSTALLDIR)
 	install -m 644 webbench.1 $(DESTDIR)$(PREFIX)/$(INSTALLDIR)

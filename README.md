@@ -4,7 +4,7 @@ Webbench是一个在linux下使用的非常简单的网站压测工具。它使�
 
 ##使用：
 
-	sudo make && make install
+	sudo make && sudo make install PREFIX=your_path_to_webbench
   
 ##命令行选项：
 
