@@ -5,7 +5,6 @@ LDFLAGS?=
 PREFIX?=	/usr/local/webbench
 VERSION=1.5
 TMPDIR=/tmp/webbench-$(VERSION)
-INSTALLDIR?= man
 
 all:   webbench tags
 
@@ -17,8 +16,10 @@ install: webbench
 	install -s webbench $(DESTDIR)$(PREFIX)/bin
 	ln -sf $(DESTDIR)$(PREFIX)/bin/webbench $(DESTDIR)/usr/local/bin/webbench
 
-	install -d $(DESTDIR)$(PREFIX)/$(INSTALLDIR)
-	install -m 644 webbench.1 $(DESTDIR)$(PREFIX)/$(INSTALLDIR)
+	install -d $(DESTDIR)/usr/local/man/man1
+	install -d $(DESTDIR)$(PREFIX)/man/man1
+	install -m 644 webbench.1 $(DESTDIR)$(PREFIX)/man/man1
+	ln -sf $(DESTDIR)$(PREFIX)/man/man1/webbench.1 $(DESTDIR)/usr/local/man/man1/webbench.1
 
 	install -d $(DESTDIR)$(PREFIX)/share/doc/webbench
 	install -m 644 debian/copyright $(DESTDIR)$(PREFIX)/share/doc/webbench
